@@ -1,8 +1,8 @@
 "use strict"
 
-const postButton = document.getElementById('postButton');
+const deleteButton = document.getElementById('deleteButton');
 
-const updatedInfo = document.getElementById('updateInfo');
+const courseInfo = document.getElementById('courseInfo');
 
 const department = document.getElementById('dept');
 const courseNum = document.getElementById('courseNum');
