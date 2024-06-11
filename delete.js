@@ -7,15 +7,17 @@ const courseInfo = document.getElementById('courseInfo');
 document.addEventListener('DOMContentLoaded', () => {
     
     getData()
+
     deleteButton.addEventListener('click',() => {
         setTimeout(() => {
-            alert(`course has been deleted`)
 
+            alert(`course has been deleted`)
             setTimeout(() => {
+
                 deleteCourse()
                 window.location.href = 'index.html'
-            
-            },3000)
+
+            },2000)
         },1000)
     })
 
