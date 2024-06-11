@@ -7,15 +7,25 @@ const courseInfo = document.getElementById('courseInfo');
 document.addEventListener('DOMContentLoaded', () => {
     
     getData()
-    deleteButton.addEventListener('click', deleteCourse)
+    deleteButton.addEventListener('click',() => {
+        setTimeout(() => {
+            alert(`course has been deleted`)
 
-})
+            setTimeout(() => {
+                deleteCourse()
+                window.location.href = 'index.html'
+            
+            },3000)
+        },1000)
+    })
+
+});
 
 function getQueryParam(param)
 {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
-}
+};
 
 function getData(){
     
@@ -36,7 +46,7 @@ function getData(){
         
     })
     .catch((error) => console.error(error));
-}
+};
 
 function deleteCourse(){
 
@@ -67,14 +77,5 @@ function deleteCourse(){
     .then(response => response.json())
     .then(data => data)
     .catch((error) => console.error(error));
-
-    setTimeout(() => {
-        alert(`course has been deleted`)
-
-        setTimeout(() => {
-            window.location.href = 'index.html'
-        
-        },3000)
-    },1000)
    
-}
+};
