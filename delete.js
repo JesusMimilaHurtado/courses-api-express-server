@@ -4,44 +4,77 @@ const deleteButton = document.getElementById('deleteButton');
 
 const courseInfo = document.getElementById('courseInfo');
 
-const department = document.getElementById('dept');
-const courseNum = document.getElementById('courseNum');
-const courseName = document.getElementById('courseName');
-const instructor = document.getElementById('instr');
-const startDate = document.getElementById('startDate');
-const numDays = document.getElementById('numDays');
-
 document.addEventListener('DOMContentLoaded', () => {
     
-    postButton.addEventListener('click', getData)
+    getData()
+    deleteButton.addEventListener('click', deleteCourse)
 
 })
 
-function getData(){
+function getQueryParam(param)
+{
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
 
+function getData(){
+    
+    const endpoint = getQueryParam('id');
+
+    fetch('http://localhost:8090/api/courses/' + endpoint)
+    .then(response => response.json())
+    .then(data => { 
+            const info =`    
+            <strong> Id </strong>: ${data.id}
+            <strong> Department </strong>: ${data.dept}
+            <strong> Course Number </strong>: ${data.courseNum}
+            <strong> Course Name </strong>: ${data.courseName}
+            <strong> Instructor </strong>: ${data.instructor}
+            <strong> Start Date </strong>: ${data.startDate}
+            <strong> Number of Days </strong>:&nbsp${data.numDays}`
+            courseInfo.innerHTML = info
+        
+    })
+    .catch((error) => console.error(error));
+}
+
+function deleteCourse(){
+
+    const endpoint = getQueryParam('id');
     const urlencoded = new URLSearchParams();
-    urlencoded.append("dept", department.value);
-    urlencoded.append("courseNum", courseNum.value);
-    urlencoded.append("courseName", courseName.value);
-    urlencoded.append("instructor", instructor.value);
-    urlencoded.append("startDate", startDate.value);
-    urlencoded.append("numDays", numDays.value);
+
+    fetch('http://localhost:8090/api/courses/' + endpoint)
+    .then(response => response.json())
+    .then(data => {
+
+        urlencoded.append("id", data.id)
+        urlencoded.append("dept", data.dept);
+        urlencoded.append("courseNum", data.courseNum);
+        urlencoded.append("courseName", data.courseName);
+        urlencoded.append("instructor", data.instructor);
+        urlencoded.append("startDate", data.startDate);
+        urlencoded.append("numDays", data.numDays);})
+
+    .catch((error) => console.error(error));
 
     const requestOptions = {
-        method: "POST",
+        method: "DELETE",
         body: urlencoded,
         redirect: "follow"
     };
 
-    fetch('http://localhost:8090/api/courses', requestOptions)
+    fetch('http://localhost:8090/api/courses/' + endpoint, requestOptions)
     .then(response => response.json())
-    .then(data => { `
-            Department: ${data.dept}
-            Course Number: ${data.courseNum}
-            Course Name: ${data.courseName}
-            Instructor: ${data.instructor}
-            Start Date: ${data.startDate}
-            Number of Days: ${data.numDays}`
-    })
+    .then(data => data)
     .catch((error) => console.error(error));
+
+    setTimeout(() => {
+        alert(`course has been deleted`)
+
+        setTimeout(() => {
+            window.location.href = 'index.html'
+        
+        },3000)
+    },1000)
+   
 }

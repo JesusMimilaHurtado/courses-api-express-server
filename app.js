@@ -1,13 +1,18 @@
 "use strict"
 
 const dropdown = document.getElementById('dropdown')  
+
 const displayInfo = document.getElementById('text')
+
 const infoButton = document.getElementById('showInfo')
+const deleteButton = document.getElementById('delete')
+
 const fragment = document.createDocumentFragment()
 
 document.addEventListener('DOMContentLoaded', () => {
     GrabCourseDataFromAPI()
     infoButton.addEventListener('click', displayData)
+    deleteButton.addEventListener('click', fetchQuery)
 
 })
 
@@ -47,6 +52,26 @@ function displayData(){
             <strong> Number of Days </strong>:&nbsp${data.numDays}`
         displayInfo.innerHTML = info
     })
+    .catch((error) => console.error(error));
+
+}
+
+function fetchQuery(){
+
+    const endpoint = dropdown.value
+
+    fetch('http://localhost:8090/api/courses/' + endpoint)
+    .then(response => response.json())
+    .then(data => {
+        const id = data.id;
+    
+        const queryString = `?id=${encodeURIComponent(id)}`;
+        const newUrl = 'confirm_delete.html' + queryString;
+    
+        // Redirect to the new URL with query parameters
+        window.location.href = newUrl;
+    })
+
     .catch((error) => console.error(error));
 
 }
