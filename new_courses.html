@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Course</title>
+    <link rel="stylesheet" href="https://matcha.mizu.sh/matcha.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home Page</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <form>
+            <label for="dept">Department:</label>
+            <input type="text" class="flash active" id="dept">
+
+            <label for="courseNum">Course Number:</label>
+            <input type="text" class="flash active" id="courseNum">
+
+            <label for="courseName">Course Name:</label>
+            <input type="text" class="flash active" id="courseName">
+
+            <label for="instr">instructor:</label>
+            <input type="text" class="flash active" id="instr">
+
+            <label for="startDate">Start Date:</label>
+            <input type="text" class="flash active" id="startDate">
+
+            <label for="numDays">Number of Days:</label>
+            <input type="text" class="flash active" id="numDays">
+
+            <button type="button" id="postButton">Add Info</button>
+        </form>
+        <p id="updateInfo"></p>
+    </main>
+
+    <script src="post.js"></script>
+</body>
+</html>
